@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     public class DownloadTask extends AsyncTask<String, Void, String> {
 
         @Override
-        protected String doInBackground(String... strings) {
+        protected String doInBackground(String... urls) {
             String result = "";
             URL url;
             HttpURLConnection urlConnection = null;
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
                     result += current;
                     data = reader.read();
                 }
+                return result;
 
             } catch (Exception e) {
                 e.printStackTrace();
