@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.service.autofill.FieldClassification;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import java.io.InputStream;
@@ -25,10 +26,14 @@ public class MainActivity extends AppCompatActivity {
 
     String[] answers = new String[4];
 
+    ImageView imageView;
+    Button button0;
+    Button button1;
+    Button button2;
+    Button button3;
+
     int locationOfCorrectAnswer = 0;
     int chosenCeleb = 0;
-
-    ImageView imageView;
 
     public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 
@@ -45,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
             } catch (Exception e) {
                 e.printStackTrace();
+                return null;
             }
         }
     }
@@ -85,6 +91,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         imageView = findViewById(R.id.imageView);
+        button0 = findViewById(R.id.button0);
+        button1 = findViewById(R.id.button1);
+        button2 = findViewById(R.id.button2);
+        button3 = findViewById(R.id.button3);
 
         DownloadTask task = new DownloadTask();
         String result = null;
@@ -130,6 +140,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
+
+            button0.setText(answers[0]);
+            button1.setText(answers[1]);
+            button2.setText(answers[2]);
+            button3.setText(answers[3]);
 
         } catch (Exception e) {
             e.printStackTrace();
