@@ -45,5 +45,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        DownloadTask task = new DownloadTask();
+        String result = null;
+
+        try {
+            result = task.execute("http://www.posh24.se/kandisar").get();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
