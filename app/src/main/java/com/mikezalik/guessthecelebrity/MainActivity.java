@@ -2,6 +2,8 @@ package com.mikezalik.guessthecelebrity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.service.autofill.FieldClassification;
@@ -19,6 +21,24 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> celebURLs = new ArrayList<String>();
     ArrayList<String> celebNames = new ArrayList<String>();
 
+    public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
+
+        @Override
+        protected Bitmap doInBackground(String... urls) {
+            try {
+                URL url = new URL(urls[0]);
+
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+                InputStream inputStream = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(inputStream);
+                return myBitmap;
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public class DownloadTask extends AsyncTask<String, Void, String> {
 
@@ -67,14 +87,14 @@ public class MainActivity extends AppCompatActivity {
             Matcher m = p.matcher(splitResult[0]);
 
             while (m.find()) {
-                System.out.println(m.group(1));
+                celebURLs.add(m.group(1));
             }
 
             p = Pattern.compile("alt=\"(.*?)\"");
             m = p.matcher(splitResult[0]);
 
             while (m.find()) {
-                System.out.println(m.group(1));
+                celebNames.add(m.group(1));
             }
 
         } catch (Exception e) {
