@@ -4,13 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.service.autofill.FieldClassification;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
+
+    ArrayList<String> celebURLs = new ArrayList<String>();
+    ArrayList<String> celebNames = new ArrayList<String>();
+
 
     public class DownloadTask extends AsyncTask<String, Void, String> {
 
@@ -52,6 +60,22 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             result = task.execute("http://www.posh24.se/kandisar").get();
+
+            String [] splitResult = result.split("<div class=\"listedArticles\">");
+
+            Pattern p = Pattern.compile("img src =\"(.*?)\"");
+            Matcher m = p.matcher(splitResult[0]);
+
+            while (m.find()) {
+                System.out.println(m.group(1));
+            }
+
+            p = Pattern.compile("alt=\"(.*?)\"");
+            m = p.matcher(splitResult[0]);
+
+            while (m.find()) {
+                System.out.println(m.group(1));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
