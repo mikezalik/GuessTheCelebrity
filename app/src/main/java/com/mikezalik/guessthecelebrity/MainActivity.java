@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> celebURLs = new ArrayList<String>();
     ArrayList<String> celebNames = new ArrayList<String>();
 
+    String[] answers = new String[4];
+
+    int locationOfCorrectAnswer = 0;
     int chosenCeleb = 0;
 
     ImageView imageView;
@@ -112,6 +115,21 @@ public class MainActivity extends AppCompatActivity {
             Bitmap celebImage = imageTask.execute(celebURLs.get(chosenCeleb)).get();
 
             imageView.setImageBitmap(celebImage);
+
+            locationOfCorrectAnswer = rand.nextInt(4);
+            int incorrectAnswerLocation;
+
+            for (int i = 0; i < 4; i++) {
+                if (i == locationOfCorrectAnswer) {
+                    answers[i] = celebNames.get(chosenCeleb);
+                } else {
+                    incorrectAnswerLocation = rand.nextInt(celebURLs.size());
+
+                    while (incorrectAnswerLocation == chosenCeleb) {
+                        incorrectAnswerLocation = rand.nextInt(celebURLs.size());
+                    }
+                }
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
