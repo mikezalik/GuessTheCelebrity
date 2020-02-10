@@ -95,39 +95,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        imageView = findViewById(R.id.imageView);
-        button0 = findViewById(R.id.button0);
-        button1 = findViewById(R.id.button1);
-        button2 = findViewById(R.id.button2);
-        button3 = findViewById(R.id.button3);
-
-        DownloadTask task = new DownloadTask();
-        String result = null;
-
+    public void newQuestion () {
         try {
-            result = task.execute("http://www.posh24.se/kandisar").get();
-
-            String [] splitResult = result.split("<div class=\"listedArticles\">");
-
-            Pattern p = Pattern.compile("img src =\"(.*?)\"");
-            Matcher m = p.matcher(splitResult[0]);
-
-            while (m.find()) {
-                celebURLs.add(m.group(1));
-            }
-
-            p = Pattern.compile("alt=\"(.*?)\"");
-            m = p.matcher(splitResult[0]);
-
-            while (m.find()) {
-                celebNames.add(m.group(1));
-            }
-
             Random rand = new Random();
             chosenCeleb = rand.nextInt(celebURLs.size());
 
@@ -155,6 +124,45 @@ public class MainActivity extends AppCompatActivity {
             button1.setText(answers[1]);
             button2.setText(answers[2]);
             button3.setText(answers[3]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        imageView = findViewById(R.id.imageView);
+        button0 = findViewById(R.id.button0);
+        button1 = findViewById(R.id.button1);
+        button2 = findViewById(R.id.button2);
+        button3 = findViewById(R.id.button3);
+
+        DownloadTask task = new DownloadTask();
+        String result = null;
+
+        newQuestion();
+
+        try {
+            result = task.execute("http://www.posh24.se/kandisar").get();
+
+            String [] splitResult = result.split("<div class=\"listedArticles\">");
+
+            Pattern p = Pattern.compile("img src =\"(.*?)\"");
+            Matcher m = p.matcher(splitResult[0]);
+
+            while (m.find()) {
+                celebURLs.add(m.group(1));
+            }
+
+            p = Pattern.compile("alt=\"(.*?)\"");
+            m = p.matcher(splitResult[0]);
+
+            while (m.find()) {
+                celebNames.add(m.group(1));
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
