@@ -10,6 +10,7 @@ import android.service.autofill.FieldClassification;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -37,7 +38,11 @@ public class MainActivity extends AppCompatActivity {
     int chosenCeleb = 0;
 
     public void celebChosen(View view) {
-        
+        if (view.getTag().toString().equals(Integer.toString(locationOfCorrectAnswer))) {
+            Toast.makeText(getApplicationContext(), "Correct!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Wrong! It was " + celebNames.get(chosenCeleb), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
