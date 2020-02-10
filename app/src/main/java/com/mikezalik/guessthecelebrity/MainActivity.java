@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.service.autofill.FieldClassification;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -34,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
 
     int locationOfCorrectAnswer = 0;
     int chosenCeleb = 0;
+
+    public void celebChosen(View view) {
+        
+    }
 
     public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
 
