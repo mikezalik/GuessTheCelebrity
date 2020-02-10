@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Toast.makeText(getApplicationContext(), "Wrong! It was " + celebNames.get(chosenCeleb), Toast.LENGTH_SHORT).show();
         }
+        newQuestion();
     }
 
     public class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
